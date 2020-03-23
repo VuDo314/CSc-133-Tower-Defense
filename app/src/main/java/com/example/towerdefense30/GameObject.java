@@ -9,15 +9,14 @@ import android.graphics.Point;
    private Point location;
    private Bitmap bitmap;
    private Point size;
-   private int objectWidth;
-   private int objectHeight;
+   private int S;
+
    GameObject(Point size){
-        this.objectWidth = size.x/10;
-        this.objectHeight = size.y/10;
+        this.S = CONSTANT.SQUARE_SIZE;
    }
    Bitmap setBitmapObject(Context context, int id){
        this.bitmap = BitmapFactory.decodeResource(context.getResources(), id);
-       this.bitmap = Bitmap.createScaledBitmap(this.bitmap, objectWidth, objectHeight, false);
+       this.bitmap = Bitmap.createScaledBitmap(this.bitmap, S, S, false);
        return bitmap;
    }
    void setLocation(int x, int y){

@@ -12,7 +12,8 @@ import android.graphics.Rect;
 import java.util.ArrayList;
 
 public class HUD extends GameObject {
-    private int textFormatting;
+    private int S; // small square size
+    //private int textFormatting;
     private Point location = new Point();
     //private Point buttonSize;
     private ArrayList<Bitmap> controls;
@@ -25,13 +26,14 @@ public class HUD extends GameObject {
     static int CONSTRUCT = 2;
     private static int RECYCLE = 3;
 
-    private final int SQUARE_SIZE = 50; //create constant size of each square 50 pixels
+    //private final int S = 50; //create constant size of each square 50 pixels
 
     HUD(Context context, Point size) {
         super(size);
+        this.S = CONSTANT.SQUARE_SIZE;
         screenHeight = size.y;
         screenWidth = size.x;
-        textFormatting = SQUARE_SIZE;
+        S = S;
         //buttonSize = new Point();
         //buttonSize.x = SQUARE_SIZE * 2;
         //buttonSize.y = SQUARE_SIZE * 2;
@@ -51,10 +53,10 @@ public class HUD extends GameObject {
     private void createControlsR(){
 
         //set the touch area of each button
-        Rect playR = new Rect( 0, 0, SQUARE_SIZE * 2, SQUARE_SIZE * 2);
-        Rect pauseR = new Rect( 0, 0, SQUARE_SIZE * 2, SQUARE_SIZE * 2);
-        Rect constructR = new Rect(SQUARE_SIZE * 3, 0, SQUARE_SIZE * 5, SQUARE_SIZE * 2);
-        Rect recycleR = new Rect (SQUARE_SIZE * 6, 0, SQUARE_SIZE * 8, SQUARE_SIZE * 2);
+        Rect playR = new Rect( 0, 0, S * 2, S * 2);
+        Rect pauseR = new Rect( 0, 0, S * 2, S * 2);
+        Rect constructR = new Rect(S * 3, 0, S * 5, S * 2);
+        Rect recycleR = new Rect (S * 6, 0, S * 8, S * 2);
 
         controlsR = new ArrayList<>();
         int PLAY = 0;
@@ -74,7 +76,7 @@ public class HUD extends GameObject {
 
     void draw(Canvas canvas, Paint paint, GameState gameState){
         paint.setColor(Color.argb(255,255, 255, 255));
-        paint.setTextSize(textFormatting);
+        paint.setTextSize(S);
 
         drawLives(canvas, paint, gameState);
         drawResource(canvas, paint, gameState);
@@ -84,12 +86,12 @@ public class HUD extends GameObject {
 
         if(gameState.getGameOver()){
             //canvas.drawBitmap(this.controls.get(4), location.x*buttonSize.x , location.y*buttonSize.y, paint);
-            paint.setTextSize(textFormatting * 3);
+            paint.setTextSize(S * 3);
             canvas.drawText("PRESS START", screenWidth/4, screenHeight/2, paint);
         }
         if(gameState.getPaused()&&!gameState.getGameOver()){
-            paint.setTextSize(SQUARE_SIZE * 5);
-            canvas.drawText("PAUSED", SQUARE_SIZE * 8, SQUARE_SIZE * 12, paint);
+            paint.setTextSize(S * 5);
+            canvas.drawText("PAUSED", S * 8, S * 12, paint);
         }
         //state for constructing towers
         if(gameState.getFrozen()&&!gameState.getPaused()&&!gameState.getGameOver()){
@@ -114,21 +116,21 @@ public class HUD extends GameObject {
             }
 
             canvas.drawBitmap(this.controls.get(i), location.x, 0, paint);
-            location.x += 3 * SQUARE_SIZE;
+            location.x += 3 * S;
         }
     }
 
     private void drawHiScore(Canvas canvas, Paint paint, GameState gameState){
-        canvas.drawText("Hi-Score: "+gameState.getHighscore(), textFormatting * 20, textFormatting, paint);
+        canvas.drawText("Hi-Score: "+gameState.getHighscore(), S * 20, S, paint);
     }
     private void drawScore(Canvas canvas, Paint paint, GameState gameState){
-        canvas.drawText("Score: "+gameState.getScore(), textFormatting * 20, textFormatting * 2 - 2, paint);
+        canvas.drawText("Score: "+gameState.getScore(), S * 20, S * 2 - 2, paint);
     }
     private void drawLives(Canvas canvas, Paint paint, GameState gameState){
-        canvas.drawText("Lives: "+gameState.getHitPoint(), textFormatting * 9, textFormatting, paint);
+        canvas.drawText("Lives: "+gameState.getHitPoint(), S * 9, S, paint);
     }
     private void drawResource(Canvas canvas, Paint paint, GameState gameState){
-        canvas.drawText("Resources: "+gameState.getResource(), textFormatting * 9, textFormatting * 2 - 2, paint);
+        canvas.drawText("Resources: "+gameState.getResource(), S * 9, S * 2 - 2, paint);
     }
 
     private void drawControls(Canvas canvas, Paint paint){
@@ -146,7 +148,7 @@ public class HUD extends GameObject {
     Bitmap setBitmapObject(Context context, int id){
         Bitmap bitmap;
         bitmap = BitmapFactory.decodeResource(context.getResources(), id);
-        bitmap = Bitmap.createScaledBitmap(bitmap, SQUARE_SIZE * 2, SQUARE_SIZE * 2, false);
+        bitmap = Bitmap.createScaledBitmap(bitmap, S * 2, S * 2, false);
         return bitmap;
     }
 }

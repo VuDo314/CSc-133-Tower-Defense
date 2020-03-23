@@ -15,18 +15,20 @@ public class Map extends GameObject {
     private Bitmap bitmapObject;
     private Bitmap bitmapPath;
     private Bitmap UIBar;
-    private int objectWidth;
-    private int objectHeight;
+    //private int objectWidth;
+    //private int objectHeight;
     private int horSize;
     private int verSize;
-    private final int SQUARE_SIZE = 50; //create constant size of each square 50 pixels
+    private int S; //small square size
+    //private final int SQUARE_SIZE = 50; //create constant size of each square 50 pixels
 
     Map(Context context, Point size) {
         super(size);
+        this.S = CONSTANT.SQUARE_SIZE;
         this.verSize = size.y;
         this.horSize = size.x;
-        this.objectWidth = SQUARE_SIZE;
-        this.objectHeight = SQUARE_SIZE;
+        //this.objectWidth = SQUARE_SIZE;
+        //this.objectHeight = SQUARE_SIZE;
         this.UIBar = this.setBitmapObject(context, R.drawable.uibarsquare);
         this.bitmapPath = this.setBitmapObject(context, R.drawable.pathsquare);
         this.bitmapObject = this.setBitmapObject(context, R.drawable.mapsquare);
@@ -34,40 +36,40 @@ public class Map extends GameObject {
     }
     Bitmap setBitmapObject(Context context, int id){
         this.bitmapObject = BitmapFactory.decodeResource(context.getResources(), id);
-        this.bitmapObject = Bitmap.createScaledBitmap(this.bitmapObject, objectWidth, objectHeight, false);
+        this.bitmapObject = Bitmap.createScaledBitmap(this.bitmapObject, S, S, false);
         return bitmapObject;
     }
     void draw(Canvas canvas, Paint paint, GameState gameState){
         setLocation(0, 0);
-        int w = (horSize / objectWidth) * objectWidth;
-        int h = (verSize / objectHeight) * objectHeight;
+        int w = (horSize / S) * S;
+        int h = (verSize / S) * S;
 
-        // draw the who green area map 63 72 24
+        // draw the who green area map
         for(int j = 0; j < h; ) {
             for (int i = 0; i < w; ) {
-                if(j == 0 || j == SQUARE_SIZE){
+                if(j == 0 || j == S){
                     canvas.drawBitmap(this.UIBar, i, j, paint);
                 }
                 else{
                     canvas.drawBitmap(this.bitmapObject, i, j, paint);
                 }
 
-                i += SQUARE_SIZE;
+                i += S;
             }
-            j += SQUARE_SIZE;
+            j += S;
         }
 
         //draw the brown horizontal path
-        for(int i = 0; i <= SQUARE_SIZE * 25;){
-            canvas.drawBitmap(this.bitmapPath, i, SQUARE_SIZE * 12, paint);
-            canvas.drawBitmap(this.bitmapPath, i, SQUARE_SIZE * 13, paint);
-            i += SQUARE_SIZE;
+        for(int i = 0; i <= S * 25;){
+            canvas.drawBitmap(this.bitmapPath, i, S * 12, paint);
+            canvas.drawBitmap(this.bitmapPath, i, S * 13, paint);
+            i += S;
         }
         //draw the brown vertical path
-        for(int j = SQUARE_SIZE * 2; j <= SQUARE_SIZE * 13;){
-            canvas.drawBitmap(this.bitmapPath,SQUARE_SIZE * 24, j, paint);
-            canvas.drawBitmap(this.bitmapPath,SQUARE_SIZE * 25, j, paint);
-            j += SQUARE_SIZE;
+        for(int j = S * 2; j <= S * 13;){
+            canvas.drawBitmap(this.bitmapPath,S * 24, j, paint);
+            canvas.drawBitmap(this.bitmapPath,S * 25, j, paint);
+            j += S;
         }
 
 
