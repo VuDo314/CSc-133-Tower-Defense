@@ -14,6 +14,7 @@ final class GameState {
     private int score;
     private int highscore;
     private int hitPoint;
+    private int resource;
     private SharedPreferences.Editor editor;
 
     GameState(GameStarter gameStarter, Context context){
@@ -35,6 +36,7 @@ final class GameState {
     void startNewGame(){
         score = 0;
         hitPoint = 100;
+        resource = 1000;
         stopDrawing();
         gameStarter.deSpawnRespawn();
         resume();
@@ -48,25 +50,65 @@ final class GameState {
             endGame();
         }
     }
-    int getHitPoint(){return hitPoint;}
-    void increaseScore(){score++;}
-    int getScore(){return score;}
-    int getHighscore(){return highscore;}
-    void pause(){paused = true;}
-    void resume(){gameOver = false; paused = false;}
+
+    int getResource(){
+        return resource;
+    }
+
+    void setResource(int resource){
+        this.resource = resource;
+    }
+
+    int getHitPoint(){
+        return hitPoint;
+    }
+    void increaseScore(){
+        score++;
+    }
+    int getScore(){
+        return score;
+    }
+    int getHighscore(){
+        return highscore;
+    }
+    void pause(){
+        paused = true;
+    }
+    void resume(){
+        gameOver = false;
+        paused = false;
+    }
     void stopEverything(){
         paused = true;
         gameOver = true;
         threadRunning = false;
     }
-    void freeze(){frozen = true;} //the state for constructing towers
+    void freeze(){
+        frozen = true;
+    } //the state for constructing towers
 
-    boolean getThreadRunning(){return threadRunning;}
-    void startThread(){threadRunning = true;}
-    private void stopDrawing(){drawing = false;}
-    private void startDrawing(){drawing = true;}
-    boolean getDrawing(){return drawing;}
-    boolean getPaused(){return paused;}
-    boolean getGameOver(){return gameOver;}
-    boolean getFrozen(){return frozen;}
+    boolean getThreadRunning(){
+        return threadRunning;
+    }
+    void startThread(){
+        threadRunning = true;
+    }
+    private void stopDrawing(){
+        drawing = false;
+    }
+    private void startDrawing(){
+        drawing = true;
+    }
+    boolean getDrawing(){
+        return drawing;
+    }
+    boolean getPaused(){
+        return paused;
+    }
+    boolean getGameOver(){
+        return gameOver;
+    }
+    boolean getFrozen(){
+        return frozen;
+    }
 }

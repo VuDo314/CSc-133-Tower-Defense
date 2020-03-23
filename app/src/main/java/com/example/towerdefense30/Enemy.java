@@ -31,8 +31,8 @@ public class Enemy extends GameObject {
         this.bitmapObject = Bitmap.createScaledBitmap(this.bitmapObject, objectWidth, objectHeight, false);
         return bitmapObject;
     }
-    void draw(Canvas canvas, Paint paint, GameState gameState){
-            setLocation(0, SQUARE_SIZE * 13);
+    void draw(Canvas canvas, Paint paint, GameState gameState, Point p){
+            setLocation(SQUARE_SIZE * p.x, SQUARE_SIZE * p.y);
             canvas.drawBitmap(this.bitmapObject, location.x , location.y, paint);
     }
     void setLocation(int x, int y){location.x =x; location.y=y;}

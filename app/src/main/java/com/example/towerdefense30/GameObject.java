@@ -7,7 +7,7 @@ import android.graphics.Point;
 
  public class GameObject {
    private Point location;
-   private Bitmap bitmapObject;
+   private Bitmap bitmap;
    private Point size;
    private int objectWidth;
    private int objectHeight;
@@ -16,9 +16,9 @@ import android.graphics.Point;
         this.objectHeight = size.y/10;
    }
    Bitmap setBitmapObject(Context context, int id){
-       this.bitmapObject = BitmapFactory.decodeResource(context.getResources(), id);
-       this.bitmapObject = Bitmap.createScaledBitmap(this.bitmapObject, objectWidth, objectHeight, false);
-       return bitmapObject;
+       this.bitmap = BitmapFactory.decodeResource(context.getResources(), id);
+       this.bitmap = Bitmap.createScaledBitmap(this.bitmap, objectWidth, objectHeight, false);
+       return bitmap;
    }
    void setLocation(int x, int y){
        location.x = x;

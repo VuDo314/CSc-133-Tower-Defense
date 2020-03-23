@@ -8,10 +8,13 @@ import android.view.MotionEvent;
 
 import java.util.ArrayList;
 public class UIController implements InputObserver {
+
     private Path path = new Path();
+
     public UIController(GameEngineBroadcaster gb){
         gb.addObserver(this);
     }
+
     @Override
     public void handleInput(MotionEvent event, GameState gameState, ArrayList<Rect> buttons, Renderer r) {
         int i = event.getActionIndex();

@@ -3,6 +3,7 @@ package com.example.towerdefense30;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
+import android.graphics.Point;
 import android.view.SurfaceHolder;
 import android.view.SurfaceView;
 
@@ -10,9 +11,13 @@ public class Renderer {
     private Canvas canvas;
     private SurfaceHolder surfaceHolder;
     private Paint paint;
+    private Point spawn1; //spawning points
+    //private Point spawn2; //spawning points
     Renderer(SurfaceView sh){
         surfaceHolder = sh.getHolder();
         paint = new Paint();
+        spawn1 = new Point(0, 12);
+       //spawn2 = new Point(0, 13);
     }
     void draw(GameState gameState, HUD hud, Tower t, Map m, Enemy e) {
         if (surfaceHolder.getSurface().isValid()) {
@@ -22,9 +27,11 @@ public class Renderer {
                 // Draw all the game objects here
                 m.draw(canvas, paint,gameState);
                 t.draw(canvas, paint, gameState);
-                e.draw(canvas, paint, gameState);
+
+                e.draw(canvas, paint, gameState, spawn1);
+               // e.draw(canvas, paint, gameState, spawn2);
                 e.move();
-                e.draw(canvas, paint, gameState);
+                e.draw(canvas, paint, gameState, spawn1);
             }
             if(gameState.getGameOver()) {
                 // Draw a background graphic here
