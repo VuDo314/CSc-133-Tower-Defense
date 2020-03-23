@@ -14,6 +14,7 @@ public class Map extends GameObject {
     //private ArrayList<Point> path = new ArrayList<>();
     private Bitmap bitmapObject;
     private Bitmap bitmapPath;
+    private Bitmap UIBar;
     private int objectWidth;
     private int objectHeight;
     private int horSize;
@@ -26,6 +27,7 @@ public class Map extends GameObject {
         this.horSize = size.x;
         this.objectWidth = SQUARE_SIZE;
         this.objectHeight = SQUARE_SIZE;
+        this.UIBar = this.setBitmapObject(context, R.drawable.uibarsquare);
         this.bitmapPath = this.setBitmapObject(context, R.drawable.pathsquare);
         this.bitmapObject = this.setBitmapObject(context, R.drawable.mapsquare);
         this.location = new Point();
@@ -40,10 +42,16 @@ public class Map extends GameObject {
         int w = (horSize / objectWidth) * objectWidth;
         int h = (verSize / objectHeight) * objectHeight;
 
-        // draw the who green area map
-        for(int j = SQUARE_SIZE * 2; j < h; ) {
+        // draw the who green area map 63 72 24
+        for(int j = 0; j < h; ) {
             for (int i = 0; i < w; ) {
-               canvas.drawBitmap(this.bitmapObject, i, j, paint);
+                if(j == 0 || j == SQUARE_SIZE){
+                    canvas.drawBitmap(this.UIBar, i, j, paint);
+                }
+                else{
+                    canvas.drawBitmap(this.bitmapObject, i, j, paint);
+                }
+
                 i += SQUARE_SIZE;
             }
             j += SQUARE_SIZE;

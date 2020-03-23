@@ -73,7 +73,7 @@ public class HUD extends GameObject {
     }
 
     void draw(Canvas canvas, Paint paint, GameState gameState){
-        paint.setColor(Color.argb(255,125, 125, 255));
+        paint.setColor(Color.argb(255,255, 255, 255));
         paint.setTextSize(textFormatting);
 
         drawLives(canvas, paint, gameState);
