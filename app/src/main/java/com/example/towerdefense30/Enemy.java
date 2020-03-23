@@ -19,13 +19,13 @@ public class Enemy extends GameObject {
     //private final int SQUARE_SIZE = 50; //create constant size of each square 50 pixels
     Enemy(Context context, Point size) {
         super(size);
+        this.S = CONSTANT.SQUARE_SIZE;
         //this.objectWidth = SQUARE_SIZE;
         //this.objectHeight = SQUARE_SIZE;
         this.location = new Point();
         this.speed = 2;
         screenWidth = size.x;
         screenHeight = size.y;
-        this.S = CONSTANT.SQUARE_SIZE;
         this.bitmapObject = this.setBitmapObject(context, R.drawable.basic_enemy);
     }
     Bitmap setBitmapObject(Context context, int id){
@@ -33,8 +33,8 @@ public class Enemy extends GameObject {
         this.bitmapObject = Bitmap.createScaledBitmap(this.bitmapObject, S, S, false);
         return bitmapObject;
     }
-    void draw(Canvas canvas, Paint paint, GameState gameState, Point location){
-            canvas.drawBitmap(this.bitmapObject, location.x , location.y, paint);
+    void draw(Canvas canvas, Paint paint, GameState gameState, Point p){
+            canvas.drawBitmap(this.bitmapObject, p.x * S, p.y * S, paint);
     }
     void setLocation(int x, int y){
         location.x = x;
@@ -42,9 +42,9 @@ public class Enemy extends GameObject {
     }
     void move(){
             if(this.location.x<screenWidth/2+500-S){
-                this.location.x+=speed;
+                this.location.x += speed;
             }else{
-                this.location.y+=speed;
+                this.location.y += speed;
             }
     }
 }

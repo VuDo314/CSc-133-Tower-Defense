@@ -18,7 +18,7 @@ public class Renderer {
         surfaceHolder = sh.getHolder();
         paint = new Paint();
         spawn1 = new Point(0, 12);
-        tower = new Point(14, 16);
+        tower = new Point(22, 14);
        //spawn2 = new Point(0, 13);
     }
     void draw(GameState gameState, HUD hud, Tower t, Map m, Enemy e) {

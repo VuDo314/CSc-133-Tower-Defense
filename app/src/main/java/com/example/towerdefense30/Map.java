@@ -45,8 +45,8 @@ public class Map extends GameObject {
         int h = (verSize / S) * S;
 
         // draw the who green area map
-        for(int j = 0; j < h; ) {
-            for (int i = 0; i < w; ) {
+        for(int j = 0; j < verSize; ) {
+            for (int i = 0; i < horSize; ) {
                 if(j == 0 || j == S){
                     canvas.drawBitmap(this.UIBar, i, j, paint);
                 }
@@ -66,7 +66,7 @@ public class Map extends GameObject {
             i += S;
         }
         //draw the brown vertical path
-        for(int j = S * 2; j <= S * 13;){
+        for(int j = S * 12; j <= verSize;){
             canvas.drawBitmap(this.bitmapPath,S * 24, j, paint);
             canvas.drawBitmap(this.bitmapPath,S * 25, j, paint);
             j += S;

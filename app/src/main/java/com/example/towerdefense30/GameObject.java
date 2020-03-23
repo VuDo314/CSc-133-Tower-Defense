@@ -12,8 +12,9 @@ import android.graphics.Point;
    private int S;
 
    GameObject(Point size){
-        this.S = CONSTANT.SQUARE_SIZE;
+       this.S = CONSTANT.SQUARE_SIZE;
    }
+
    Bitmap setBitmapObject(Context context, int id){
        this.bitmap = BitmapFactory.decodeResource(context.getResources(), id);
        this.bitmap = Bitmap.createScaledBitmap(this.bitmap, S, S, false);

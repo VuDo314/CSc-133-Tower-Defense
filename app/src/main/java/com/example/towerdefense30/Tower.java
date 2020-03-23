@@ -26,11 +26,12 @@ public class Tower extends GameObject {
     }
     Bitmap setBitmapObject(Context context, int id){
         this.bitmapObject = BitmapFactory.decodeResource(context.getResources(), id);
-        this.bitmapObject = Bitmap.createScaledBitmap(this.bitmapObject, S, S, false);
+        this.bitmapObject = Bitmap.createScaledBitmap(this.bitmapObject, 2 * S, 2 * S, false);
         return bitmapObject;
     }
-    void draw(Canvas canvas, Paint paint, GameState gameState, Point location){
-        canvas.drawBitmap(this.bitmapObject, location.x , location.y, paint);
+
+    void draw(Canvas canvas, Paint paint, GameState gameState, Point p){
+        canvas.drawBitmap(this.bitmapObject, p.x * S, p.y * S, paint);
     }
     void setLocation(int x, int y){
         location.x = x;
