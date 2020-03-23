@@ -87,7 +87,7 @@ public class HUD extends GameObject {
         if(gameState.getGameOver()){
             //canvas.drawBitmap(this.controls.get(4), location.x*buttonSize.x , location.y*buttonSize.y, paint);
             paint.setTextSize(S * 3);
-            canvas.drawText("PRESS START", screenWidth/4, screenHeight/2, paint);
+            canvas.drawText("PRESS PLAY" , screenWidth/4, screenHeight/2, paint);
         }
         if(gameState.getPaused()&&!gameState.getGameOver()){
             paint.setTextSize(S * 5);
