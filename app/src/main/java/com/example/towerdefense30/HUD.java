@@ -25,6 +25,7 @@ public class HUD extends GameObject {
     static int PAUSE = 1;
     static int CONSTRUCT = 2;
     private static int RECYCLE = 3;
+    private Bitmap UIBar;
 
     //private final int S = 50; //create constant size of each square 50 pixels
 
@@ -48,6 +49,8 @@ public class HUD extends GameObject {
         for(int i=0; i<numButtons;i++) {
             controls.add(i, this.setBitmapObject(context, label.get(i)));
         }
+
+        this.UIBar = this.setBitmapObject(context, R.drawable.uibarsquare);
         createControlsR();
     }
     private void createControlsR(){
@@ -78,6 +81,11 @@ public class HUD extends GameObject {
         paint.setColor(Color.argb(255,255, 255, 255));
         paint.setTextSize(S);
 
+        //load the UI bar
+        for(int i = 0; i < screenWidth; i++) {
+            canvas.drawBitmap(UIBar, i * S, 0, paint);
+        }
+        //Write the texts on the US bar
         drawLives(canvas, paint, gameState);
         drawResource(canvas, paint, gameState);
         drawHiScore(canvas, paint, gameState);
@@ -86,6 +94,7 @@ public class HUD extends GameObject {
 
         if(gameState.getGameOver()){
             //canvas.drawBitmap(this.controls.get(4), location.x*buttonSize.x , location.y*buttonSize.y, paint);
+
             paint.setTextSize(S * 3);
             canvas.drawText("PRESS PLAY" , screenWidth/4, screenHeight/2, paint);
         }

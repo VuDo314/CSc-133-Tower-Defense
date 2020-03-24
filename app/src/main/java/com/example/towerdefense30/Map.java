@@ -15,6 +15,7 @@ public class Map extends GameObject {
     private Bitmap bitmapObject;
     private Bitmap bitmapPath;
     private Bitmap UIBar;
+    private Bitmap castle;
     //private int objectWidth;
     //private int objectHeight;
     private int horSize;
@@ -24,11 +25,13 @@ public class Map extends GameObject {
 
     Map(Context context, Point size) {
         super(size);
-        this.S = CONSTANT.SQUARE_SIZE;
+        this.S = CONSTANT.SQUARE_SIZE * 4;
         this.verSize = size.y;
         this.horSize = size.x;
         //this.objectWidth = SQUARE_SIZE;
         //this.objectHeight = SQUARE_SIZE;
+        this.castle = this.setBitmapObject(context, R.drawable.castle);
+        S = CONSTANT.SQUARE_SIZE;
         this.UIBar = this.setBitmapObject(context, R.drawable.uibarsquare);
         this.bitmapPath = this.setBitmapObject(context, R.drawable.pathsquare);
         this.bitmapObject = this.setBitmapObject(context, R.drawable.mapsquare);
@@ -61,18 +64,18 @@ public class Map extends GameObject {
 
         //draw the brown horizontal path
         for(int i = 0; i <= S * 25;){
-            canvas.drawBitmap(this.bitmapPath, i, S * 12, paint);
-            canvas.drawBitmap(this.bitmapPath, i, S * 13, paint);
+            canvas.drawBitmap(this.bitmapPath, i, S * 10, paint);
+            canvas.drawBitmap(this.bitmapPath, i, S * 11, paint);
             i += S;
         }
         //draw the brown vertical path
-        for(int j = S * 12; j <= verSize;){
+        for(int j = S * 10; j <= verSize;){
             canvas.drawBitmap(this.bitmapPath,S * 24, j, paint);
             canvas.drawBitmap(this.bitmapPath,S * 25, j, paint);
             j += S;
         }
-
-
+        //draw castle
+        canvas.drawBitmap(this.castle,S * 20, S * 17, paint);
     }
     void setLocation(int x, int y){
         location.x = x;
