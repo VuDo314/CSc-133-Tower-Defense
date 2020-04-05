@@ -34,7 +34,8 @@ class GameState {
     }
 
     void loseLife(int intruders){
-        hitPoint = hitPoint - intruders;
+        int temp = CONSTANT.HP;
+        hitPoint = temp - intruders;
         //don't forget the sound
         if(hitPoint<=0){
             pauseTimer();
@@ -47,7 +48,9 @@ class GameState {
     }
 
     void increaseWarFund(int loss){
-        warFund += loss*10;
+        int temp = CONSTANT.WF_INIT;
+
+        warFund =temp + loss*10;
     }
 
     int getWarFund(){
