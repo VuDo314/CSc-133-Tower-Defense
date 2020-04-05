@@ -8,53 +8,64 @@ import android.view.MotionEvent;
 import android.view.SurfaceView;
 
 import java.util.ArrayList;
+import java.util.Random;
 
-public class GameEngine extends SurfaceView implements Runnable, GameStarter, GameEngineBroadcaster{
-    private Thread thread = new Thread(this);
-    private long fps;
-    private GameState gameState;
-    private Renderer r;
-    private HUD hud;
-    private ArrayList<InputObserver> inputObservers = new ArrayList();
-    UIController mUIController;
-    private Tower t;
+@SuppressLint("ViewConstructor")
+public class GameEngine extends SurfaceView implements Runnable, GameEngineBroadcaster{
+    private Thread thread = null;
+    Boolean running = true;
     private Map map;
-    private Enemy e;
-    final int MILLIS_IN_SECOND = 1000;
+    private Tower tower;
+    private ArrayList<Enemy> enemies;
+    private Renderer renderer;
+    private GameState gameState;
+    private Castle castle;
+    private HUD hud;
+    int r1;
+    int r2;
+    private ArrayList<InputObserver> inputObservers = new ArrayList();
 
-    GameEngine(Context context, Point size){
+    public GameEngine(Context context, Point size) {
         super(context);
-        gameState = new GameState(this, context);
-        hud = new HUD(context,size);
-        r = new Renderer(this);
-        mUIController = new UIController(this);
-        t = new Tower(context, size);
+        UIController uiController = new UIController(this);
+        enemies = new ArrayList<>();
         map = new Map(context, size);
-        e = new Enemy(context, size);
+        tower = new Tower(context, size);
+         new Projectile(context, size, tower);
+         for(int i=0; i < CONSTANT.WAVE1_ENEMY;i++){
+             Enemy g = new Enemy(context, size);
+             g.setBitmapObject(context);
+             enemies.add(g);
+         }
+        for(int i = 0; i< enemies.size(); i++) {
+            enemies.get(i).setLocation(i* enemies.get(i).getSquareSize()*2, enemies.get(i).getSquareSize()*12);
+        }
+        Random rand = new Random();
+        r1 = rand.nextInt(enemies.size());
+        r2=r1;
+        while(r1==r2){
+            r2 = rand.nextInt(enemies.size());
+        }
+        renderer = new Renderer(this);
+        gameState = new GameState();
+        castle = new Castle(context, size);
+        hud = new HUD(context, size);
     }
-
+    public void addObserver(InputObserver o){
+        inputObservers.add(o);
+    }
     @Override
     public void run() {
-        while(gameState.getThreadRunning()) {
-            long frameStartTime = System.currentTimeMillis();
-
-            if(!gameState.getPaused()){
-                //e.move(this.getFps());
-                //updates game objects;
-                if(gameState.getFrozen()){
-
-                }
-            }
-            //r.draw(gameState, hud, t, map);
-            long timeThisFrame = System.currentTimeMillis() - frameStartTime;
-            if (timeThisFrame >= 1) {
-                fps = MILLIS_IN_SECOND / timeThisFrame;
-            }
-            r.draw(gameState, hud, t, map, e);
+        while(gameState.getThreadRunning()){
+                renderer.draw(castle, map, tower, enemies, r1, r2, gameState, hud);
         }
     }
-    public void stopThread(){
-        //more
+    void startThread(){
+        gameState.startThread();
+        thread = new Thread(this);
+        thread.start();
+    }
+    void stopThread(){
         gameState.stopEverything();
         try{
             thread.join();
@@ -62,27 +73,11 @@ public class GameEngine extends SurfaceView implements Runnable, GameStarter, Ga
             Log.e("Exception", "stopThread()"+e.getMessage());
         }
     }
-    long getFps(){return this.fps;}
-    public void startThread(){
-        //more
-        gameState.startThread();
-        thread = new Thread(this);
-        thread.start();
-    }
 
     @Override
-    public void deSpawnRespawn() {
-
-    }
-
-    @Override
-    public void addObserver(InputObserver o) {
-        inputObservers.add(o);
-    }
-    @Override
-    public boolean onTouchEvent(MotionEvent motionEvent) {
-        for (InputObserver o : inputObservers) {
-            o.handleInput(motionEvent, gameState, hud.getControlsR(),r);
+    public boolean onTouchEvent(MotionEvent motionEvent){
+        for(InputObserver o : inputObservers){
+            o.handleInput(motionEvent, gameState, hud.getControlsR());
         }
         return true;
     }

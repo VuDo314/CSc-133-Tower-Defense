@@ -12,11 +12,10 @@ public class GameActivity extends Activity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        Display display = getWindowManager()
-                .getDefaultDisplay();
+        Display display = getWindowManager().getDefaultDisplay();
         Point size = new Point();
         display.getSize(size);
-        gameEngine = new GameEngine(this, size);
+        gameEngine = new GameEngine(this,size);
         setContentView(gameEngine);
     }
     @Override

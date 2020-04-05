@@ -1,91 +1,86 @@
 package com.example.towerdefense30;
 
 import android.content.Context;
-import android.content.SharedPreferences;
 
-final class GameState {
+import java.util.ArrayList;
+
+class GameState {
     private static volatile boolean threadRunning = false;
     private static volatile boolean paused = true;
     private static volatile boolean gameOver = true;
     private static volatile boolean drawing = false;
-    private static volatile boolean frozen = true;
+    private static volatile boolean buildState = false;
+    private static int hitPoint;
+    private static float timeIncrement=0.1f;
+    private int warFund;
+    private float timer; //timing system;
+    private final float timeToSpawn = CONSTANT.SPAWN_TIME;
 
-    private GameStarter gameStarter;
-    private int score;
-    private int highscore;
-    private int hitPoint;
-    private int resource;
-    private SharedPreferences.Editor editor;
+    GameState(){
 
-    GameState(GameStarter gameStarter, Context context){
-        this.gameStarter = gameStarter;
-        SharedPreferences prefs;
-        prefs = context.getSharedPreferences("highscore", Context.MODE_PRIVATE);
-        editor = prefs.edit();
-        highscore = prefs.getInt("hi_score",0);
+        timer=0;
     }
+
     private void endGame(){
         gameOver = true;
         paused = true;
-        if(score>highscore){
-            highscore = score;
-            editor.putInt("hi_score", highscore);
-            editor.commit();
-        }
     }
-    void startNewGame(){
-        score = 0;
-        hitPoint = 100;
-        resource = 1000;
-        stopDrawing();
-        gameStarter.deSpawnRespawn();
-        resume();
 
+    void startNewGame(){
+        hitPoint = CONSTANT.HP;
+        warFund = CONSTANT.WF_INIT;
+        stopDrawing();
+        resume();
         startDrawing();
     }
-    void loseLife(/*sound maybe*/){
-        hitPoint--;
-        if(hitPoint==0){
+
+    void loseLife(int intruders){
+        hitPoint = hitPoint - intruders;
+        //don't forget the sound
+        if(hitPoint<=0){
+            pauseTimer();
             pause();
             endGame();
         }
     }
-
-    int getResource(){
-        return resource;
-    }
-
-    void setResource(int resource){
-        this.resource = resource;
-    }
-
     int getHitPoint(){
         return hitPoint;
     }
-    void increaseScore(){
-        score++;
+
+    void increaseWarFund(int loss){
+        warFund += loss*10;
     }
-    int getScore(){
-        return score;
+
+    int getWarFund(){
+        return warFund;
     }
-    int getHighscore(){
-        return highscore;
-    }
+
     void pause(){
         paused = true;
     }
     void resume(){
         gameOver = false;
         paused = false;
+        startTimer();
     }
+
     void stopEverything(){
         paused = true;
         gameOver = true;
         threadRunning = false;
+        pauseTimer();
     }
-    void freeze(){
-        frozen = true;
-    } //the state for constructing towers
+    void startTimer(){
+
+        timer += timeIncrement;
+    }
+    void pauseTimer(){
+
+        timer-=timeIncrement;
+    }
+    void resetTimer(){
+        timer=0;
+    }
 
     boolean getThreadRunning(){
         return threadRunning;
@@ -96,9 +91,11 @@ final class GameState {
     private void stopDrawing(){
         drawing = false;
     }
-    private void startDrawing(){
+
+    void startDrawing(){
         drawing = true;
     }
+
     boolean getDrawing(){
         return drawing;
     }
@@ -108,7 +105,18 @@ final class GameState {
     boolean getGameOver(){
         return gameOver;
     }
-    boolean getFrozen(){
-        return frozen;
+
+    float getTime(){
+        return timer;
+    }
+    float getTimeToSpawn(){
+        return timeToSpawn;
+    }
+
+    boolean getBuild(){
+        return buildState;
+    }
+    void setBuild(){
+        buildState = true;
     }
 }
