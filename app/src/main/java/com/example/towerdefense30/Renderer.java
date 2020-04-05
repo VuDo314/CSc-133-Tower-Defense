@@ -8,7 +8,7 @@ import android.view.SurfaceView;
 
 import java.util.ArrayList;
 import java.util.logging.Level;
-
+//Renderer is the class that manages to render all the object drawings
 class Renderer {
     private int S;
     private Paint paint;

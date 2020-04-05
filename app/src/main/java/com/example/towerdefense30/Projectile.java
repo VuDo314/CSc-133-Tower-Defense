@@ -7,7 +7,8 @@ import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
 import android.graphics.Rect;
-
+//projectile class inherited from the GameObject class;
+//its purpose is to generate projectile on the screen
 class Projectile extends GameObject{
     private Bitmap bitmapObject;
     private int objectWidth;
@@ -38,6 +39,8 @@ class Projectile extends GameObject{
     void draw(Canvas canvas, Paint paint){
         canvas.drawBitmap(bitmapObject, location.x, location.y, paint);
     }
+
+    //The move method generates a predestined move path for projectiles to follow
     void move(Enemy enemy, Tower tower){
 
         if(enemy.getLocationX() < tower.getLocationX()){
@@ -53,6 +56,7 @@ class Projectile extends GameObject{
             location.y += enemy.getLocationY();;
         }
     }
+    //When the game paused; the projectile's speed would reduce to 0;
     void pause(){
 
         speed=0;

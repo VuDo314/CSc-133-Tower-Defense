@@ -17,7 +17,6 @@ class GameState {
     private final float timeToSpawn = CONSTANT.SPAWN_TIME;
 
     GameState(){
-
         timer=0;
     }
 
