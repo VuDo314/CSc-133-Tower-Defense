@@ -6,7 +6,7 @@ import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-
+// Map is a bitmap object that used to create a map of the game
 class Map extends GameObject{
     private Point location;
     //private ArrayList<Point> path = new ArrayList<>();
