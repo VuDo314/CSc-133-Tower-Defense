@@ -42,7 +42,35 @@ class Renderer {
         }
     }
     private void gameObjectSpawn(ArrayList<Enemy> enemies, GameState gameState) {
-        for(int i = 0; i< enemies.size(); ++i){
+            int i=enemies.size()-1;
+            enemies.get(i).draw(canvas, paint);
+             if(gameState.getPaused()){
+                enemies.get(i).pause();
+            }else {
+            if (enemies.get(i).Dead()) {
+                enemies.get(i).pause();
+            } else {
+                enemies.get(i).resume();
+                enemies.get(i).move();
+                }
+            }
+            while (enemies.get(i).getLocationX() >= 2*CONSTANT.SQUARE_SIZE) {
+                i=i-1;
+                enemies.get(i).draw(canvas, paint);
+                if(gameState.getPaused()){
+                    enemies.get(i).pause();
+                }else {
+                    if (enemies.get(i).Dead()) {
+                        enemies.get(i).pause();
+                    } else {
+                        enemies.get(i).resume();
+                        enemies.get(i).move();
+                    }
+                }
+                if(i<=0) break;
+            }
+
+        /*for(int i = 0; i< enemies.size(); ++i){
             enemies.get(i).draw(canvas, paint);
             if(gameState.getPaused()){
                 enemies.get(i).pause();
@@ -50,10 +78,10 @@ class Renderer {
                 if(enemies.get(i).Dead()){
                     enemies.get(i).pause();
                 }else {
-                    enemies.get(i).resume();
-                    enemies.get(i).move();
-                }
+                        enemies.get(i).resume();
+                        enemies.get(i).move();
+                    }
             }
-        }
+        }*/
     }
 }

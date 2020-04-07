@@ -67,10 +67,10 @@ class Tower extends GameObject{
                                 projectile.draw(canvas, paint);
                                 projectile.move(g, this);
                             }
-                            enemies.get(r1).hitPointLoss();
+                           /* enemies.get(r1).hitPointLoss();
                             enemies.get(r1).dropDead();
                             enemies.get(r2).hitPointLoss();
-                            enemies.get(r2).dropDead();
+                            enemies.get(r2).dropDead();*/
                         }
                     } else {
                         this.withinRange = false;

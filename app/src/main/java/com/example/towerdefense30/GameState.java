@@ -15,11 +15,9 @@ class GameState {
     private int warFund;
     private float timer; //timing system;
     private final float timeToSpawn = CONSTANT.SPAWN_TIME;
-
     GameState(){
         timer=0;
     }
-
     private void endGame(){
         gameOver = true;
         paused = true;
@@ -73,7 +71,6 @@ class GameState {
         pauseTimer();
     }
     void startTimer(){
-
         timer += timeIncrement;
     }
     void pauseTimer(){

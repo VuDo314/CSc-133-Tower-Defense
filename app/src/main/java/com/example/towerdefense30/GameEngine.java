@@ -38,7 +38,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameEngineBroad
              enemies.add(g);
          }
         for(int i = 0; i< enemies.size(); i++) {
-            enemies.get(i).setLocation(i* enemies.get(i).getSquareSize()*2, enemies.get(i).getSquareSize()*12);
+            enemies.get(i).setLocation( enemies.get(i).getSquareSize(), enemies.get(i).getSquareSize()*12);
         }
         Random rand = new Random();
         r1 = rand.nextInt(enemies.size());
