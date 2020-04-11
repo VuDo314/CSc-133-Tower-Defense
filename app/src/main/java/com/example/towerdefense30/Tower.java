@@ -52,7 +52,7 @@ class Tower extends GameObject{
         canvas.drawBitmap(bitmapObject, location.x, location.y, paint);
     }
 
-    void fire(ArrayList<Enemy> enemies, Canvas canvas, Paint paint, int r1, int r2, GameState gameState){
+    void fire(ArrayList<Enemy> enemies, Canvas canvas, Paint paint, GameState gameState){
             for(Enemy g: enemies) {
                 if (gameState.getPaused()) {
                     projectile.pause();
@@ -67,10 +67,6 @@ class Tower extends GameObject{
                                 projectile.draw(canvas, paint);
                                 projectile.move(g, this);
                             }
-                           /* enemies.get(r1).hitPointLoss();
-                            enemies.get(r1).dropDead();
-                            enemies.get(r2).hitPointLoss();
-                            enemies.get(r2).dropDead();*/
                         }
                     } else {
                         this.withinRange = false;

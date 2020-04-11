@@ -21,8 +21,6 @@ public class GameEngine extends SurfaceView implements Runnable, GameEngineBroad
     private GameState gameState;
     private Castle castle;
     private HUD hud;
-    int r1;
-    int r2;
     private ArrayList<InputObserver> inputObservers = new ArrayList();
 
     public GameEngine(Context context, Point size) {
@@ -40,12 +38,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameEngineBroad
         for(int i = 0; i< enemies.size(); i++) {
             enemies.get(i).setLocation( enemies.get(i).getSquareSize(), enemies.get(i).getSquareSize()*12);
         }
-        Random rand = new Random();
-        r1 = rand.nextInt(enemies.size());
-        r2=r1;
-        while(r1==r2){
-            r2 = rand.nextInt(enemies.size());
-        }
+
         renderer = new Renderer(this);
         gameState = new GameState();
         castle = new Castle(context, size);
@@ -57,7 +50,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameEngineBroad
     @Override
     public void run() {
         while(gameState.getThreadRunning()){
-                renderer.draw(castle, map, tower, enemies, r1, r2, gameState, hud);
+                renderer.draw(castle, map, tower, enemies, gameState, hud);
         }
     }
     void startThread(){

@@ -73,7 +73,6 @@ public class HUD extends GameObject{
     }
 
     ArrayList<Rect>getControlsR(){
-
         return controlsR;
     }
 
@@ -106,7 +105,6 @@ public class HUD extends GameObject{
         gameState.startTimer();
 
         if(gameState.getGameOver()){
-            //canvas.drawBitmap(this.controls.get(4), location.x*buttonSize.x , location.y*buttonSize.y, paint);
             paint.setTextSize(textFormatting*5);
             canvas.drawText("PRESS PLAY" , screenWidth/4, screenHeight/2, paint);
             gameState.resetTimer();
@@ -118,13 +116,10 @@ public class HUD extends GameObject{
 
         }
 
-        if(gameState.getBuild()){
-
-
+       /* if(gameState.getBuild()){
             canvas.drawBitmap(this.controls.get(6), S * 5, S * 5, paint);
             gameState.pauseTimer();
-
-        }
+        }*/
 
         drawControls(canvas, paint);
         setLocation();

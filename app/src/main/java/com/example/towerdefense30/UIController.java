@@ -40,7 +40,6 @@ public class UIController implements InputObserver{
                     gameState.setBuild();
                 }
             }
-
             if(buttons.get(HUD.CONSTRUCT2).contains(x,y)){
                 if(!gameState.getPaused()){
                     gameState.pause();
