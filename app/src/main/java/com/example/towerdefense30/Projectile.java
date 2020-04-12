@@ -58,7 +58,6 @@ class Projectile extends GameObject{
     }
     //When the game paused; the projectile's speed would reduce to 0;
     void pause(){
-
         speed=0;
     }
     int getLocationX(){

@@ -12,7 +12,7 @@ public class UIController implements InputObserver{
     }
 
     @Override
-    public void handleInput(MotionEvent event, GameState gameState, ArrayList<Rect>buttons){
+    public void handleInput(MotionEvent event, GameState gameState, ArrayList<Rect>buttons, ArrayList<Rect>areas){
         int i = event.getActionIndex();
         int x = (int)event.getX(i);
         int y = (int)event.getY(i);
@@ -38,6 +38,7 @@ public class UIController implements InputObserver{
                 if(!gameState.getPaused()){
                     gameState.pause();
                     gameState.setBuild();
+
                 }
             }
             if(buttons.get(HUD.CONSTRUCT2).contains(x,y)){
@@ -57,6 +58,10 @@ public class UIController implements InputObserver{
                     gameState.pause();
                 }
             }
+            if(areas.get(HUD.AREA1).contains(x,y)){
+                gameState.setConstruct();
+            }
+
         }
     }
 }

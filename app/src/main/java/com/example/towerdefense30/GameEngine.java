@@ -70,7 +70,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameEngineBroad
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
         for(InputObserver o : inputObservers){
-            o.handleInput(motionEvent, gameState, hud.getControlsR());
+            o.handleInput(motionEvent, gameState, hud.getControlsR(), hud.getAreasR());
         }
         return true;
     }

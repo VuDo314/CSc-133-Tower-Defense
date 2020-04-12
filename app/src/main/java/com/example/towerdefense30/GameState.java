@@ -10,6 +10,8 @@ class GameState {
     private static volatile boolean gameOver = true;
     private static volatile boolean drawing = false;
     private static volatile boolean buildState = false;
+    private static volatile boolean construct = false;
+
     private static int hitPoint;
     private static float timeIncrement=0.1f;
     private int warFund;
@@ -111,11 +113,12 @@ class GameState {
     float getTimeToSpawn(){
         return timeToSpawn;
     }
-
     boolean getBuild(){
         return buildState;
     }
     void setBuild(){
         buildState = true;
     }
+    void setConstruct(){construct=true;}
+    boolean getConstruct(){return construct;}
 }
