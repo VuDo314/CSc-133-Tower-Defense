@@ -10,16 +10,16 @@ class GameState {
     private static volatile boolean gameOver = true;
     private static volatile boolean drawing = false;
     private static volatile boolean buildState = false;
+    private static volatile boolean construct = false;
+
     private static int hitPoint;
     private static float timeIncrement=0.1f;
     private int warFund;
     private float timer; //timing system;
     private final float timeToSpawn = CONSTANT.SPAWN_TIME;
-
     GameState(){
         timer=0;
     }
-
     private void endGame(){
         gameOver = true;
         paused = true;
@@ -73,7 +73,6 @@ class GameState {
         pauseTimer();
     }
     void startTimer(){
-
         timer += timeIncrement;
     }
     void pauseTimer(){
@@ -114,11 +113,12 @@ class GameState {
     float getTimeToSpawn(){
         return timeToSpawn;
     }
-
     boolean getBuild(){
         return buildState;
     }
     void setBuild(){
         buildState = true;
     }
+    void setConstruct(){construct=true;}
+    boolean getConstruct(){return construct;}
 }

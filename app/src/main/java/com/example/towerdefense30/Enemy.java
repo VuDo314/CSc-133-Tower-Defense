@@ -37,8 +37,8 @@ class Enemy extends GameObject{
         this.bitmapObjectR = setBitmapObject(context);
         this.bitmapObjectD = this.rotateBitmap(this.setBitmapObject(context), down);
         this.bitmapObjectDead = setBitmapObjectDead(context);
-        speed = 5;
-        location = new Point(0,objectHeight*9);
+        speed = 1;
+        location = new Point();
         hitPoint =10;
         isDead = false;
     }
@@ -97,7 +97,7 @@ class Enemy extends GameObject{
         speed=0;
     }
     void resume(){
-        speed=5;
+        speed=1;
     }
     BitmapDrawable beTransparent(BitmapDrawable drawable){
         drawable.setAlpha(100);

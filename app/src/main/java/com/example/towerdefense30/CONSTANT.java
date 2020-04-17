@@ -14,4 +14,5 @@ class CONSTANT {
     static final int WF_INIT = 500;
     static final int SPAWN_TIME = 10;
     static final int WAVE1_ENEMY = 6;
+    static final int NUM_AREAS=2;
 }

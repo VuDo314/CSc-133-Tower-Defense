@@ -16,6 +16,8 @@ public class HUD extends GameObject{
     private Point location = new Point();
     private ArrayList<Bitmap>controls;
     private ArrayList<Rect>controlsR;
+    private ArrayList<Bitmap>areas;
+    private ArrayList<Rect>areasR;
     //private final int numButtons = 4; replace with constant BUTTONS
     private ArrayList<Integer>label;
     private int screenHeight;
@@ -27,6 +29,8 @@ public class HUD extends GameObject{
     static int CONSTRUCT3 = 4;
     static int RECYCLE = 5;
     //static int BUILD = 6;
+    static int AREA1 = 0;
+    static int AREA2 = 1;
     private int textFormatting;
 
     HUD(Context context, Point size) {
@@ -47,6 +51,11 @@ public class HUD extends GameObject{
             controls.add(i, this.setBitmapObject(context, label.get(i)));
         }
         createControlsR();
+        areas = new ArrayList<>();
+        for(int i= 0; i<CONSTANT.NUM_AREAS;i++){
+            areas.add(i, this.setBitmapObject(context, R.drawable.buildsquare));
+        }
+        createAreasR();
         textFormatting = size.x/50;
           screenHeight=size.y;
           screenWidth=size.x;
@@ -62,7 +71,6 @@ public class HUD extends GameObject{
         Rect construct3 = new Rect(S * 6, 0, S * 8, S * 2);
         Rect recycleR = new Rect (S * 8, 0, S * 10, S * 2);
 
-
         controlsR = new ArrayList<>();
         controlsR.add(PLAY, playR);
         controlsR.add(PAUSE, pauseR);
@@ -72,15 +80,31 @@ public class HUD extends GameObject{
         controlsR.add(RECYCLE, recycleR);
     }
 
-    ArrayList<Rect>getControlsR(){
+    private void createAreasR(){
+        Rect area1 = new Rect(S*22, S*14, S*24, S*16);
+        Rect area2 = new Rect (S*10, S*14, S*12, S*16);
+        areasR = new ArrayList<>();
+        areasR.add(AREA1, area1);
+        areasR.add(AREA2, area2);
+    }
 
+    ArrayList<Rect>getControlsR(){
         return controlsR;
     }
+    ArrayList<Rect>getAreasR(){return areasR;}
 
     private void drawControls(Canvas canvas, Paint paint){
         paint.setColor(Color.argb(0x00, 0xff, 0xff, 0xff));
         for(Rect r: controlsR){
             canvas.drawRect(r.left, r.top, r.right, r.bottom, paint);
+        }
+        paint.setColor(Color.argb(255, 255, 255, 255));
+    }
+
+    private void drawAreas(Canvas canvas, Paint paint){
+        paint.setColor(Color.argb(0x00, 0xff, 0xff, 0xff));
+        for(Rect a: areasR){
+            canvas.drawRect(a.left, a.top, a.right, a.bottom, paint);
         }
         paint.setColor(Color.argb(255, 255, 255, 255));
     }
@@ -106,7 +130,6 @@ public class HUD extends GameObject{
         gameState.startTimer();
 
         if(gameState.getGameOver()){
-            //canvas.drawBitmap(this.controls.get(4), location.x*buttonSize.x , location.y*buttonSize.y, paint);
             paint.setTextSize(textFormatting*5);
             canvas.drawText("PRESS PLAY" , screenWidth/4, screenHeight/2, paint);
             gameState.resetTimer();
@@ -115,17 +138,17 @@ public class HUD extends GameObject{
             paint.setTextSize(S * 5);
             canvas.drawText("PAUSED", screenWidth/4, screenHeight/2, paint);
             gameState.pauseTimer();
-
         }
-
-        if(gameState.getBuild()){
-
-
+        /*if(gameState.getBuild()){
             canvas.drawBitmap(this.controls.get(6), S * 5, S * 5, paint);
             gameState.pauseTimer();
-
+        }*/
+        if(gameState.getBuild()){
+            drawAreas(canvas, paint);
+            for(int i=0; i<CONSTANT.NUM_AREAS;i++){
+                canvas.drawBitmap(this.areas.get(i), areasR.get(i).left, areasR.get(i).top, paint);
+            }
         }
-
         drawControls(canvas, paint);
         setLocation();
         for(int i = 0; i<CONSTANT.BUTTONS;i++) {
