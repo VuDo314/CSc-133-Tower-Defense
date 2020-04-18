@@ -13,7 +13,6 @@ import java.util.Random;
 @SuppressLint("ViewConstructor")
 public class GameEngine extends SurfaceView implements Runnable, GameEngineBroadcaster{
     private Thread thread = null;
-    Boolean running = true;
     private Map map;
     private Tower tower;
     private ArrayList<Enemy> enemies;
@@ -70,7 +69,7 @@ public class GameEngine extends SurfaceView implements Runnable, GameEngineBroad
     @Override
     public boolean onTouchEvent(MotionEvent motionEvent){
         for(InputObserver o : inputObservers){
-            o.handleInput(motionEvent, gameState, hud.getControlsR(), hud.getAreasR());
+            o.handleInput(motionEvent, gameState, hud.getControlsR(), hud.getAreasR(), tower);
         }
         return true;
     }

@@ -30,7 +30,7 @@ class Renderer {
             if(gs.getDrawing()) {
                 map.draw(this.canvas, this.paint);
                 castle.draw(this.canvas, this.paint);
-               if(gs.getConstruct()){
+               if (gs.getConstruct()){
                        tower.draw(this.canvas, this.paint);
                 }
                 if(gs.getTime()>=gs.getTimeToSpawn()) {

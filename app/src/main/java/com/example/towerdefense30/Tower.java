@@ -23,7 +23,7 @@ class Tower extends GameObject{
         this.S = CONSTANT.SQUARE_SIZE;
         Map map = new Map(context, size);
         this.bitmapObject = this.setBitmapObject(context, R.drawable.tower);
-        this.location = new Point(S * 22, S * 14);
+        this.location = new Point();
         projectile=new Projectile(context, size,this);
         range = 6*S;
     }
