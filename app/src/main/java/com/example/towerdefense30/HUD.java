@@ -43,7 +43,7 @@ public class HUD extends GameObject{
         label.add(3,R.drawable.construct2);
         label.add(4,R.drawable.construct3);
         label.add(5,R.drawable.recycle);
-        //label.add(6,R.drawable.buildsquare);
+
 
         //set list of bitmap objs
         controls = new ArrayList<>();
@@ -78,11 +78,12 @@ public class HUD extends GameObject{
         controlsR.add(CONSTRUCT2, construct2);
         controlsR.add(CONSTRUCT3, construct3);
         controlsR.add(RECYCLE, recycleR);
+
     }
 
     private void createAreasR(){
-        Rect area1 = new Rect(S*22, S*14, S*24, S*16);
-        Rect area2 = new Rect (S*10, S*14, S*12, S*16);
+        Rect area1 = new Rect(0, S*10, S*26, S*12); //areas built towers
+        Rect area2 = new Rect (0, S*14, S*22, S*16); //areasbuilt towers
         areasR = new ArrayList<>();
         areasR.add(AREA1, area1);
         areasR.add(AREA2, area2);
@@ -101,20 +102,20 @@ public class HUD extends GameObject{
         paint.setColor(Color.argb(255, 255, 255, 255));
     }
 
-    private void drawAreas(Canvas canvas, Paint paint){
+   /* private void drawAreas(Canvas canvas, Paint paint){
         paint.setColor(Color.argb(0x00, 0xff, 0xff, 0xff));
         for(Rect a: areasR){
             canvas.drawRect(a.left, a.top, a.right, a.bottom, paint);
         }
         paint.setColor(Color.argb(255, 255, 255, 255));
-    }
+    }*/
     private Bitmap setBitmapObject(Context context, int id){
         Bitmap bitmap;
         bitmap = BitmapFactory.decodeResource(context.getResources(), id);
         bitmap = Bitmap.createScaledBitmap(bitmap, S * 2, S * 2, false);
         return bitmap;
     }
-    private void setLocation(){
+     private void setLocation(){
         location.x = 0; location.y=0;
     }
 
@@ -143,12 +144,12 @@ public class HUD extends GameObject{
             canvas.drawBitmap(this.controls.get(6), S * 5, S * 5, paint);
             gameState.pauseTimer();
         }*/
-        if(gameState.getBuild()){
+     /* if(gameState.getBuild()){
             drawAreas(canvas, paint);
             for(int i=0; i<CONSTANT.NUM_AREAS;i++){
                 canvas.drawBitmap(this.areas.get(i), areasR.get(i).left, areasR.get(i).top, paint);
             }
-        }
+        }*/
         drawControls(canvas, paint);
         setLocation();
         for(int i = 0; i<CONSTANT.BUTTONS;i++) {
