@@ -2,7 +2,6 @@ package com.example.towerdefense30;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -11,30 +10,26 @@ import android.graphics.Rect;
 
 import java.util.ArrayList;
 
-public class HUD extends GameObject{
+public class HUD extends GameObject {
     private int S;
     private Point location = new Point();
     private ArrayList<Bitmap>controls;
     private ArrayList<Rect>controlsR;
     private ArrayList<Bitmap>areas;
     private ArrayList<Rect>areasR;
-    //private final int numButtons = 4; replace with constant BUTTONS
-    private ArrayList<Integer>label;
-    private int screenHeight;
-    private int screenWidth;
+    private ArrayList<Integer> label;
     static int PLAY = 0;
     static int PAUSE = 1;
     static int CONSTRUCT1 = 2;
     static int CONSTRUCT2 = 3;
     static int CONSTRUCT3 = 4;
     static int RECYCLE = 5;
-    //static int BUILD = 6;
     static int AREA1 = 0;
     static int AREA2 = 1;
     private int textFormatting;
 
-    HUD(Context context, Point size) {
-        super(context, size);
+    HUD(Context context) {
+        super(context);
         this.S = CONSTANT.SQUARE_SIZE;
         label = new ArrayList<>();
         label.add(0,R.drawable.play);
@@ -48,20 +43,16 @@ public class HUD extends GameObject{
         //set list of bitmap objs
         controls = new ArrayList<>();
         for(int i=0; i<CONSTANT.BUTTONS;i++) {
-            controls.add(i, this.setBitmapObject(context, label.get(i)));
+            controls.add(i, this.setBitmapObject(context,2*S,2*S, label.get(i)));
         }
         createControlsR();
         areas = new ArrayList<>();
         for(int i= 0; i<CONSTANT.NUM_AREAS;i++){
-            areas.add(i, this.setBitmapObject(context, R.drawable.buildsquare));
+            areas.add(i, this.setBitmapObject(context,2*S,2*S, R.drawable.buildsquare));
         }
         createAreasR();
-        textFormatting = size.x/50;
-          screenHeight=size.y;
-          screenWidth=size.x;
+        textFormatting = S;
     }
-
-    //clickable area for each HUD button
     private void createControlsR(){
         //set the touch area of each button
         Rect playR = new Rect( 0, 0, S * 2, S * 2);
@@ -78,9 +69,7 @@ public class HUD extends GameObject{
         controlsR.add(CONSTRUCT2, construct2);
         controlsR.add(CONSTRUCT3, construct3);
         controlsR.add(RECYCLE, recycleR);
-
     }
-
     private void createAreasR(){
         Rect area1 = new Rect(0, S*10, S*26, S*12); //areas built towers
         Rect area2 = new Rect (0, S*14, S*22, S*16); //areasbuilt towers
@@ -88,7 +77,6 @@ public class HUD extends GameObject{
         areasR.add(AREA1, area1);
         areasR.add(AREA2, area2);
     }
-
     ArrayList<Rect>getControlsR(){
         return controlsR;
     }
@@ -101,21 +89,7 @@ public class HUD extends GameObject{
         }
         paint.setColor(Color.argb(255, 255, 255, 255));
     }
-
-   /* private void drawAreas(Canvas canvas, Paint paint){
-        paint.setColor(Color.argb(0x00, 0xff, 0xff, 0xff));
-        for(Rect a: areasR){
-            canvas.drawRect(a.left, a.top, a.right, a.bottom, paint);
-        }
-        paint.setColor(Color.argb(255, 255, 255, 255));
-    }*/
-    private Bitmap setBitmapObject(Context context, int id){
-        Bitmap bitmap;
-        bitmap = BitmapFactory.decodeResource(context.getResources(), id);
-        bitmap = Bitmap.createScaledBitmap(bitmap, S * 2, S * 2, false);
-        return bitmap;
-    }
-     private void setLocation(){
+    private void setLocation(){
         location.x = 0; location.y=0;
     }
 
@@ -132,24 +106,15 @@ public class HUD extends GameObject{
 
         if(gameState.getGameOver()){
             paint.setTextSize(textFormatting*5);
-            canvas.drawText("PRESS PLAY" , screenWidth/4, screenHeight/2, paint);
+            canvas.drawText("PRESS PLAY" , S*4, S*12, paint);
             gameState.resetTimer();
         }
         if(gameState.getPaused()&&!gameState.getGameOver()){
             paint.setTextSize(S * 5);
-            canvas.drawText("PAUSED", screenWidth/4, screenHeight/2, paint);
+            canvas.drawText("PAUSED", S*4, S*12, paint);
             gameState.pauseTimer();
         }
-        /*if(gameState.getBuild()){
-            canvas.drawBitmap(this.controls.get(6), S * 5, S * 5, paint);
-            gameState.pauseTimer();
-        }*/
-     /* if(gameState.getBuild()){
-            drawAreas(canvas, paint);
-            for(int i=0; i<CONSTANT.NUM_AREAS;i++){
-                canvas.drawBitmap(this.areas.get(i), areasR.get(i).left, areasR.get(i).top, paint);
-            }
-        }*/
+
         drawControls(canvas, paint);
         setLocation();
         for(int i = 0; i<CONSTANT.BUTTONS;i++) {
@@ -174,4 +139,5 @@ public class HUD extends GameObject{
     private void drawTimer(Canvas canvas, Paint paint, GameState gameState){
         canvas.drawText("Timer: "+(int)gameState.getTime(), S * 20, S , paint);
     }
+
 }

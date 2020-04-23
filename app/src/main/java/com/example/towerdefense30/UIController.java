@@ -1,26 +1,28 @@
 package com.example.towerdefense30;
 
+import android.content.Context;
 import android.graphics.Rect;
 import android.view.MotionEvent;
 
 import java.util.ArrayList;
 
 public class UIController implements InputObserver{
-    UIController(GameEngineBroadcaster gb){
-
+    private Tower t;
+    private Tower t2;
+    UIController(GameEngineBroadcaster gb, Context context){
         gb.addObserver(this);
+         t = new Tower(context);
+         t2= new Tower(context);
     }
-
+    Tower getT(){return t;}
+    Tower getT2(){return t2;}
     @Override
-    public void handleInput(MotionEvent event, GameState gameState, ArrayList<Rect>buttons, ArrayList<Rect>areas, Tower tower){
+    public void handleInput(MotionEvent event, GameState gameState, ArrayList<Rect>buttons, ArrayList<Rect>areas){
         int i = event.getActionIndex();
         int x = (int)event.getX(i);
         int y = (int)event.getY(i);
-
         int eventType = event.getAction() & MotionEvent.ACTION_MASK;
-
         if(eventType == MotionEvent.ACTION_UP || eventType == MotionEvent.ACTION_POINTER_UP) {
-
             if (buttons.get(HUD.PAUSE).contains(x, y) || buttons.get(HUD.PLAY).contains(x,y)) {
                 if (!gameState.getPaused()) {
                     // Pause the game
@@ -33,7 +35,6 @@ public class UIController implements InputObserver{
                     gameState.resume();
                 }
             }
-
             if(buttons.get(HUD.CONSTRUCT1).contains(x,y)){
                 if(!gameState.getPaused()){
                     gameState.pause();
@@ -45,32 +46,29 @@ public class UIController implements InputObserver{
                     gameState.pause();
                 }
             }
-
             if(buttons.get(HUD.CONSTRUCT3).contains(x,y)){
                 if(!gameState.getPaused()){
                     gameState.pause();
                 }
             }
-
             if(buttons.get(HUD.RECYCLE).contains(x,y)){
                 if(!gameState.getPaused()){
                     gameState.pause();
                 }
             }
-
             if (areas.get(HUD.AREA1).contains(x, y)) {
-                if(!gameState.getPaused()) {
-                    gameState.pause();
-                }
-                gameState.setConstruct();
-                tower.setLocation(x,y);
+                    if(!gameState.getPaused()) {
+                        gameState.pause();
+                    }
+                    gameState.setConstruct();
+                    t.setLocation(x,y);
             }
             if (areas.get(HUD.AREA2).contains(x, y)) {
                 if(!gameState.getPaused()) {
                     gameState.pause();
                 }
                 gameState.setConstruct();
-                tower.setLocation(x,y);
+                t2.setLocation(x,y);
             }
         }
     }

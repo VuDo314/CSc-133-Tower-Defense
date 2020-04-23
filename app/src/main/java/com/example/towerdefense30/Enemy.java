@@ -7,9 +7,10 @@ import android.graphics.Canvas;
 import android.graphics.Matrix;
 import android.graphics.Paint;
 import android.graphics.Point;
+import android.graphics.Rect;
 import android.graphics.drawable.BitmapDrawable;
 
-class Enemy extends GameObject{
+class Enemy extends GameObject {
     private Bitmap bitmapObject;
     private Bitmap bitmapObjectUp;
     private Bitmap bitmapObjectR;
@@ -23,39 +24,27 @@ class Enemy extends GameObject{
     private int speed;
     private static int hitPoint;
     private boolean isDead;
-    Enemy(Context context, Point size){
-        super(context, size);
+    private Rect rect;
+    Enemy(Context context, Point size) {
+        super(context);
         objectWidth = CONSTANT.SQUARE_SIZE;
         objectHeight = CONSTANT.SQUARE_SIZE;
         screenWidth = size.x;
         screenHeight = size.y;
         int up = -90;
         int down = 90;
-
-        this.bitmapObject = setBitmapObject(context);
-        this.bitmapObjectUp = this.rotateBitmap(this.setBitmapObject(context), up);
-        this.bitmapObjectR = setBitmapObject(context);
-        this.bitmapObjectD = this.rotateBitmap(this.setBitmapObject(context), down);
-        this.bitmapObjectDead = setBitmapObjectDead(context);
+        this.bitmapObject = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy);
+        this.bitmapObjectUp = rotateBitmap(bitmapObject, up);
+        this.bitmapObjectR = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy);
+        this.bitmapObjectD = rotateBitmap(bitmapObject, down);
+        this.bitmapObjectDead = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy_dead);
         speed = 1;
         location = new Point();
         hitPoint =10;
         isDead = false;
+        rect = new Rect(location.x, location.y, objectWidth, objectHeight);
     }
 
-    //set bitmap Object
-
-
-    Bitmap setBitmapObject(Context context){
-        this.bitmapObject = BitmapFactory.decodeResource(context.getResources(), R.drawable.basic_enemy);
-        this.bitmapObject= Bitmap.createScaledBitmap(this.bitmapObject, objectWidth, objectHeight, false);
-        return bitmapObject;
-    }
-    private Bitmap setBitmapObjectDead(Context context){
-        this.bitmapObject = BitmapFactory.decodeResource(context.getResources(), R.drawable.basic_enemy_dead);
-        this.bitmapObject= Bitmap.createScaledBitmap(this.bitmapObject, objectWidth, objectHeight, false);
-        return bitmapObject;
-    }
     private Bitmap rotateBitmap(Bitmap bitmapObject, int degree){
         Matrix matrix = new Matrix();
         matrix.preScale(1, 1);
@@ -74,12 +63,12 @@ class Enemy extends GameObject{
     }
     boolean Dead(){return isDead;}
     void move(){
-            if(location.x<objectWidth*25){
-                location.x+=speed;
-            }else{
-                this.turnDown();
-                location.y+=speed;
-            }
+        if(location.x<objectWidth*25){
+            location.x+=speed;
+        }else{
+            this.turnDown();
+            location.y+=speed;
+        }
         if(location.y<screenHeight/2-6*objectHeight){
             this.recover();
             location.y=screenHeight/2-6*objectHeight;
@@ -114,4 +103,5 @@ class Enemy extends GameObject{
     int getObjectWidth(){return objectWidth;}
     int getObjectHeight(){return objectHeight;}
     int getSquareSize(){return CONSTANT.SQUARE_SIZE;}
+
 }

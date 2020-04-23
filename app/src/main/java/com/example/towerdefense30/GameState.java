@@ -1,10 +1,6 @@
 package com.example.towerdefense30;
 
-import android.content.Context;
-
-import java.util.ArrayList;
-
-class GameState {
+public class GameState {
     private static volatile boolean threadRunning = false;
     private static volatile boolean paused = true;
     private static volatile boolean gameOver = true;
@@ -24,7 +20,6 @@ class GameState {
         gameOver = true;
         paused = true;
     }
-
     void startNewGame(){
         hitPoint = CONSTANT.HP;
         warFund = CONSTANT.WF_INIT;
@@ -32,7 +27,6 @@ class GameState {
         resume();
         startDrawing();
     }
-
     void loseLife(int intruders){
         int temp = CONSTANT.HP;
         hitPoint = temp - intruders;
@@ -120,5 +114,4 @@ class GameState {
         buildState = true;
     }
     void setConstruct(){construct=true;}
-    boolean getConstruct(){return construct;}
 }

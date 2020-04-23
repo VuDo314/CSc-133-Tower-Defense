@@ -4,7 +4,6 @@ class CONSTANT {
     private CONSTANT() {
 
     }
-
     static final int SQUARE_SIZE = 50;
     static final int LEFT = -90;
     public static final int RIGHT = 90;
@@ -15,4 +14,5 @@ class CONSTANT {
     static final int SPAWN_TIME = 10;
     static final int WAVE1_ENEMY = 6;
     static final int NUM_AREAS=2;
+
 }
