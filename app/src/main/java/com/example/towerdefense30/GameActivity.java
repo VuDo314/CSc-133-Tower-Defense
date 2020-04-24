@@ -1,6 +1,5 @@
 package com.example.towerdefense30;
 
-import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.Activity;
 import android.graphics.Point;

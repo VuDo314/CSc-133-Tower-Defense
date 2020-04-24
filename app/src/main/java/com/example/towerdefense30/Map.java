@@ -2,43 +2,30 @@ package com.example.towerdefense30;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
 import android.graphics.Canvas;
 import android.graphics.Paint;
 import android.graphics.Point;
-// Map is a bitmap object that used to create a map of the game
-class Map extends GameObject{
+
+public class Map extends GameObject {
     private Point location;
-    //private ArrayList<Point> path = new ArrayList<>();
     private Bitmap bitmapObject;
     private Bitmap bitmapPath;
     private Bitmap UIBar;
     private int horSize;
     private int verSize;
-    private Bitmap castle;
-    private int S; //small square size
-
+    private int S;
+    private Castle castle;
     Map(Context context, Point size) {
-        super(context, size);
-        this.S = CONSTANT.SQUARE_SIZE * 4;
+        super(context);
         this.verSize = size.y;
         this.horSize = size.x;
-        //this.objectWidth = SQUARE_SIZE;
-        //this.objectHeight = SQUARE_SIZE;
-        this.castle = this.setBitmapObject(context, R.drawable.castle);
         S = CONSTANT.SQUARE_SIZE;
-        this.UIBar = this.setBitmapObject(context, R.drawable.uibarsquare);
-        this.bitmapPath = this.setBitmapObject(context, R.drawable.pathsquare);
-        this.bitmapObject = this.setBitmapObject(context, R.drawable.mapsquare);
+        this.UIBar = this.setBitmapObject(context,S,S, R.drawable.uibarsquare);
+        this.bitmapPath = this.setBitmapObject(context,S,S, R.drawable.pathsquare);
+        this.bitmapObject = this.setBitmapObject(context,S,S, R.drawable.mapsquare);
         this.location = new Point();
+        castle = new Castle(context);
     }
-
-    private Bitmap setBitmapObject(Context context, int id){
-        this.bitmapObject = BitmapFactory.decodeResource(context.getResources(), id);
-        this.bitmapObject = Bitmap.createScaledBitmap(this.bitmapObject, S, S, false);
-        return bitmapObject;
-    }
-
     //draw the map
     void draw(Canvas canvas, Paint paint){
         setLocation(0, 0);
@@ -58,7 +45,6 @@ class Map extends GameObject{
             }
             j += S;
         }
-
         //draw the brown horizontal path
         for(int i = 0; i <= S * 25;){
             canvas.drawBitmap(this.bitmapPath, i, S * 12, paint);
@@ -71,14 +57,10 @@ class Map extends GameObject{
             canvas.drawBitmap(this.bitmapPath,S * 25, j, paint);
             j += S;
         }
-
-        //draw the castle
-        canvas.drawBitmap(this.castle,S * 20, S * 17, paint);
+        castle.draw(canvas,paint);
     }
     private void setLocation(int x, int y){
         location.x = x;
         location.y = y;
     }
-    int getVerSize(){return verSize;}
-    int getHorSize(){return horSize;}
 }

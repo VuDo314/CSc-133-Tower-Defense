@@ -2,14 +2,17 @@ package com.example.towerdefense30;
 
 import android.content.Context;
 import android.graphics.Bitmap;
-import android.graphics.Point;
+import android.graphics.BitmapFactory;
 
-abstract class GameObject {
-    private Point location;
+public abstract class GameObject {
     private Bitmap bitmapObject;
-    private int S;
-    GameObject(Context context, Point size){
+    GameObject(Context context){
 
     }
 
+    Bitmap setBitmapObject(Context context, int objectWidth, int objectHeight, int id) {
+        this.bitmapObject = BitmapFactory.decodeResource(context.getResources(), id);
+        this.bitmapObject= Bitmap.createScaledBitmap(this.bitmapObject, objectWidth, objectHeight, false);
+        return bitmapObject;
+    }
 }
