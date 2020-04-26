@@ -31,13 +31,11 @@ class Enemy extends GameObject {
         objectHeight = CONSTANT.SQUARE_SIZE;
         screenWidth = size.x;
         screenHeight = size.y;
-        int up = -90;
-        int down = 90;
-        this.bitmapObject = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy);
-        this.bitmapObjectUp = rotateBitmap(bitmapObject, up);
-        this.bitmapObjectR = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy);
-        this.bitmapObjectD = rotateBitmap(bitmapObject, down);
-        this.bitmapObjectDead = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy_dead);
+        bitmapObject = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy);
+        bitmapObjectUp = rotateBitmap(CONSTANT.LEFT, objectWidth, objectHeight);
+        bitmapObjectR = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy);
+        bitmapObjectD = rotateBitmap(CONSTANT.RIGHT, objectWidth, objectHeight);
+        bitmapObjectDead = setBitmapObject(context, objectWidth, objectHeight, R.drawable.basic_enemy_dead);
         speed = 1;
         location = new Point();
         hitPoint =10;
@@ -45,17 +43,10 @@ class Enemy extends GameObject {
         rect = new Rect(location.x, location.y, objectWidth, objectHeight);
     }
 
-    private Bitmap rotateBitmap(Bitmap bitmapObject, int degree){
-        Matrix matrix = new Matrix();
-        matrix.preScale(1, 1);
-        matrix.preRotate(degree);
-        this.bitmapObject = Bitmap.createBitmap(bitmapObject,0,0, objectWidth, objectHeight, matrix, true);
-        return this.bitmapObject;
-    }
 
-    private void turnUp(){this.bitmapObject = this.bitmapObjectUp;}
-    private void turnDown(){this.bitmapObject = this.bitmapObjectD;}
-    private void recover(){this.bitmapObject = this.bitmapObjectR;}
+    private void turnUp(){bitmapObject = bitmapObjectUp;}
+    private void turnDown(){bitmapObject =bitmapObjectD;}
+    private void recover(){bitmapObject = bitmapObjectR;}
     void hitPointLoss(){this.hitPoint-=0.5;}
     void setLocation(int x, int y){
         location.x = x;
@@ -66,7 +57,7 @@ class Enemy extends GameObject {
         if(location.x<objectWidth*25){
             location.x+=speed;
         }else{
-            this.turnDown();
+            turnDown();
             location.y+=speed;
         }
         if(location.y<screenHeight/2-6*objectHeight){
@@ -105,3 +96,4 @@ class Enemy extends GameObject {
     int getSquareSize(){return CONSTANT.SQUARE_SIZE;}
 
 }
+

@@ -15,4 +15,11 @@ public abstract class GameObject {
         this.bitmapObject= Bitmap.createScaledBitmap(this.bitmapObject, objectWidth, objectHeight, false);
         return bitmapObject;
     }
+    Bitmap rotateBitmap(int degree, int objectWidth, int objectHeight){
+        Matrix matrix = new Matrix();
+        matrix.preScale(1, 1);
+        matrix.preRotate(degree);
+        bitmapObject = Bitmap.createBitmap(bitmapObject,0,0, objectWidth, objectHeight, matrix, true);
+        return bitmapObject;
+    }
 }
